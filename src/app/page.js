@@ -48,30 +48,17 @@ function Charts() {
   };
 
   const options = {
-    plugins: {
-      legend: {
-        display: true,
-      },
-    },
     elements: {
       line: {
         tension: 0,
         borderWidth: 2,
-        borderColor: 'rgba(47, 97,68, 1)',
+        borderColor: '#FEE156',
         fill: 'start',
-        backgroundColor: 'rgba(47,97,68, 0.3)',
+        backgroundColor: '#FEE156',
       },
       point: {
         radius: 5,
         hitRadius: 0,
-      },
-    },
-    scales: {
-      xAxis: {
-        display: false,
-      },
-      yAxis: {
-        display: false,
       },
     },
   };

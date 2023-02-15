@@ -1,27 +1,53 @@
 'use client';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
+import { FiMenu } from 'react-icons/fi';
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
   return (
     <>
       <aside className="lg:w-[200px] hidden lg:block text-white bg-myPurple min-h-screen">
         <ul className=" py-7 px-5">
           <li className="pb-5">
-            <Link href="/">Dashboard</Link>
+            <Link href="/">
+              <span
+                className={` px-2 border-l-2 ${pathname == '/' ? 'text-black border-black ' : ' border-l-transparent'}`}
+              >
+                Dashboard
+              </span>
+            </Link>
           </li>
           <li className="pb-5">
-            <Link href="/products">Product</Link>
+            <Link href="/products">
+              <span
+                className={`px-2 border-l-2 ${
+                  pathname == '/products' ? 'text-black border-black' : 'border-l-transparent'
+                }`}
+              >
+                Product
+              </span>
+            </Link>
           </li>
           <li>
-            <Link href="/carts">Cart</Link>
+            <Link href="/carts">
+              <span
+                className={`px-2 border-l-2 ${
+                  pathname == '/carts' ? 'text-black border-black' : 'border-l-transparent'
+                }`}
+              >
+                Cart
+              </span>
+            </Link>
           </li>
         </ul>
       </aside>
 
       <button className="lg:hidden px-7 py-4 text-start w-full bg-myPurple text-white" onClick={() => setOpen(!open)}>
-        Logo
+        <FiMenu size={20} />
       </button>
 
       <div
@@ -39,17 +65,33 @@ const Sidebar = () => {
         <ul className=" py-7 px-5">
           <li className="pb-5">
             <Link href="/" onClick={() => setOpen(!open)}>
-              Dashboard
+              <span
+                className={` px-2 border-l-2 ${pathname == '/' ? 'text-black border-black ' : ' border-l-transparent'}`}
+              >
+                Dashboard
+              </span>
             </Link>
           </li>
           <li className="pb-5">
             <Link href="/products" onClick={() => setOpen(!open)}>
-              Product
+              <span
+                className={`px-2 border-l-2 ${
+                  pathname == '/products' ? 'text-black border-black' : 'border-l-transparent'
+                }`}
+              >
+                Product
+              </span>
             </Link>
           </li>
           <li>
             <Link href="/carts" onClick={() => setOpen(!open)}>
-              Cart
+              <span
+                className={`px-2 border-l-2 ${
+                  pathname == '/carts' ? 'text-black border-black' : 'border-l-transparent'
+                }`}
+              >
+                Cart
+              </span>
             </Link>
           </li>
         </ul>

@@ -2,19 +2,7 @@
 import Table from '@/components/Table';
 import React, { useEffect, useState } from 'react';
 
-// async function getDetailCart(id) {
-//   const detailCart = await fetch(`https://dummyjson.com/carts/${id}`);
-//   return detailCart.json();
-// }
-
-// async function getDetailUser(id) {
-//   const detailCart = await fetch(`https://dummyjson.com/users/${id}`);
-//   return detailCart.json();
-// }
-
 function ChartDetail({ params }) {
-  // const detail = await getDetailCart(params.id);
-  // const user = await getDetailUser(detail.userId);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
