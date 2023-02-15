@@ -13,7 +13,7 @@ export default function Home() {
   const [skip, setSkip] = useState(0);
   const [category, setCategory] = useState('all');
   // const [price, setPrice] = useState('all');
-  const limit = 10;
+  const limit = 5;
 
   useEffect(() => {
     const fetchData = async () => {

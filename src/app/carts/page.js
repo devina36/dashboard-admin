@@ -9,7 +9,7 @@ function Carts() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [skip, setSkip] = useState(0);
-  const limit = 10;
+  const limit = 5;
 
   useEffect(() => {
     const fetchData = async () => {
