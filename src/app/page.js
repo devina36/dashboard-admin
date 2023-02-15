@@ -1,91 +1,95 @@
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from './page.module.css'
+'use client';
+import { Line } from 'react-chartjs-2';
+import { CategoryScale, Chart, LinearScale, PointElement, LineElement } from 'chart.js';
+import { useEffect, useState } from 'react';
 
-const inter = Inter({ subsets: ['latin'] })
+Chart.register(CategoryScale, LinearScale, PointElement, LineElement);
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+function countDuplicates(arr, prop) {
+  let counts = {};
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
+  for (let i = 0; i < arr.length; i++) {
+    if (counts[arr[i][prop]]) {
+      counts[arr[i][prop]]++;
+    } else {
+      counts[arr[i][prop]] = 1;
+    }
+  }
 
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+  return counts;
 }
+
+function Charts() {
+  const [hasil, setHasil] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const response = await fetch(`https://dummyjson.com/products?limit=100`);
+      const result = await response.json();
+      setHasil(countDuplicates(result.products, 'brand'));
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  const keys = Object.keys(hasil);
+  const value = Object.values(hasil);
+
+  const data = {
+    labels: keys,
+    datasets: [
+      {
+        data: value,
+      },
+    ],
+  };
+
+  const options = {
+    plugins: {
+      legend: {
+        display: true,
+      },
+    },
+    elements: {
+      line: {
+        tension: 0,
+        borderWidth: 2,
+        borderColor: 'rgba(47, 97,68, 1)',
+        fill: 'start',
+        backgroundColor: 'rgba(47,97,68, 0.3)',
+      },
+      point: {
+        radius: 5,
+        hitRadius: 0,
+      },
+    },
+    scales: {
+      xAxis: {
+        display: false,
+      },
+      yAxis: {
+        display: false,
+      },
+    },
+  };
+
+  return (
+    <div>
+      <h1 className="text-2xl text-bold mb-7">Dashboard</h1>
+      {loading ? (
+        'Loading ...'
+      ) : (
+        <div className="overflow-x-auto snap-x snap-mandatory">
+          <div className="w-full min-w-[600px]">
+            <Line data={data} width={100} height={40} options={options} className="divide-y" />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default Charts;

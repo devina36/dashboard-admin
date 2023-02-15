@@ -1,4 +1,7 @@
-import './globals.css'
+// import { Provider } from 'react-redux';
+'use client';
+import Sidebar from '@/components/Sidebar';
+import './globals.css';
 
 export default function RootLayout({ children }) {
   return (
@@ -8,7 +11,12 @@ export default function RootLayout({ children }) {
         head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>{children}</body>
+      <body>
+        <div className="lg:flex relative">
+          <Sidebar />
+          <main className="w-full px-7 mt-10">{children}</main>
+        </div>
+      </body>
     </html>
-  )
+  );
 }
